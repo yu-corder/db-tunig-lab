@@ -28,8 +28,33 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'password' => bcrypt('password'),
+
+            'age' => fake()->numberBetween(18, 80),
+
+            'prefecture' => fake()->randomElement([
+                'Tokyo',
+                'Kanagawa',
+                'Chiba',
+                'Saitama',
+                'Osaka',
+                'Aichi',
+                'Fukuoka',
+            ]),
+
+            'status' => fake()->randomElement([
+                'active',
+                'inactive',
+                'suspended',
+            ]),
+
+            'gender' => fake()->randomElement([
+                'male',
+                'female',
+                'other',
+            ]),
+
+            'score' => fake()->randomFloat(2, 0, 100),
         ];
     }
 
