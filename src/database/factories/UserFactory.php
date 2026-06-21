@@ -26,9 +26,10 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => fake()->userName() . '_' . Str::random(5) . '_' . uniqid() . '@example.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('password'),
+            'remember_token' => Str::random(10),
+            'password' => static::$password ??= bcrypt('password'),
 
             'age' => fake()->numberBetween(18, 80),
 
