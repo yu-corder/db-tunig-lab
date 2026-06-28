@@ -16,10 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $totalRecords = 100000;
+        $totalRecords = 1000000;
         $chunkSize = 5000;
 
         $this->command->info("Starting to seed {$totalRecords} users...");
+        $start = microtime(true);
 
         for ($i = 0; $i < $totalRecords; $i += $chunkSize) {
             $users = [];
@@ -38,5 +39,15 @@ class DatabaseSeeder extends Seeder
             $inserted = $i + $chunkSize;
             $this->command->info("Inserted {$inserted} / {$totalRecords} users.");
         }
+
+        $time = microtime(true) - $start;
+        $this->command->info(
+            "Finished in " . round($time, 2) . " sec."
+        );
+        $this->command->info(
+            "Peak memory: " .
+            round(memory_get_peak_usage(true) / 1024 / 1024, 2)
+            . " MB"
+        );
     }
 }
